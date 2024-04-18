@@ -27,3 +27,5 @@ Imports: here,
     rmarkdown (>= 2.26)
 Suggests: devtools,
     git2r
+URL: https://github.com/annakrystalli/rrcompendium
+BugReports: https://github.com/annakrystalli/rrcompendium/issues
