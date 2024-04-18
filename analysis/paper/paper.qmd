@@ -1,136 +1,121 @@
 ---
-title: "Title Goes Here"
+title: Short Paper
+subtitle: A Short Subtitle
 author:
-  - Jane Doe:
-      correspondence: "yes"
-      email: janedoe@fosg.org
-      orcid: 0000-0003-1689-0557
-      institute:
-        - fosg
-        - fop
-  - John Q. Doe:
-      institute: fosg
-      orcid: 0000-0003-1689-0558
-  - Peder Ås:
-      institute: fosg
-      orcid: 0000-0003-1689-0559
-  - Juan Pérez:
-      orcid: 0000-0003-1689-0551
-      institute:
-        - name: Acme Corporation
-  - Max Mustermann:
-      orcid: 0000-0003-1689-0552
-institute:
-  - fosg:
-      name: Formatting Open Science Group
-      address: 23 Science Street, Eureka, Mississippi, USA
-  - fop: Federation of Planets
-title-block-published: "Last updated"  
-date: now
-date-format: long
-format: 
-  docx:
-    reference-doc: "../templates/template.docx" # Insert path for the DOCX file
-execute:
-  echo: true
-  warning: false
-  message: false
-  comment: "#>"
-  fig-path: "../figures/"
-  fig-dpi: 600
-filters:
-  - ../templates/scholarly-metadata.lua
-  - ../templates/author-info-blocks.lua
-  - ../templates/pagebreak.lua
-bibliography: references.bib
-csl: "../templates/journal-of-archaeological-science.csl" # Insert path for the bib-style
+  - name: Alice Anonymous
+    email: alice@example.com
+    affiliations: 
+        - id: some-tech
+          name: Some Institute of Technology
+          department: Department Name
+          address: Street Address
+          city: City
+          state: State
+          postal-code: Postal Code
+    attributes:
+        corresponding: true
+    note: This is the first author footnote.
+  - name: Bob Security
+    email: bob@example.com
+    affiliations:
+        - id: another-u
+          name: Another University
+          department: Department Name
+          address: Street Address
+          city: City
+          state: State
+          postal-code: Postal Code
+    note: |
+      Another author footnote, this is a very long footnote and it should be a really long footnote. But this footnote is not yet sufficiently long enough to make two lines of footnote text.
+  - name: Cat Memes
+    email: cat@example.com
+    affiliations:
+        - ref: another-u
+    note: Yet another author footnote.
+  - name: Derek Zoolander
+    email: derek@example.com
+    affilations:
+        - ref: some-tech
 abstract: |
-  Text of abstract
-keywords: |
-  keyword 1; keyword 2; keyword 3
-highlights: |
-  These are the highlights. 
+  This is the abstract. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum augue turpis, dictum non malesuada a, volutpat eget velit. Nam placerat turpis purus, eu tristique ex tincidunt et. Mauris sed augue eget turpis ultrices tincidunt. Sed et mi in leo porta egestas. Aliquam non laoreet velit. Nunc quis ex vitae eros aliquet auctor nec ac libero. Duis laoreet sapien eu mi luctus, in bibendum leo molestie. Sed hendrerit diam diam, ac dapibus nisl volutpat vitae. Aliquam bibendum varius libero, eu efficitur justo rutrum at. Sed at tempus elit.
+keywords: 
+  - keyword1
+  - keyword2
+date: last-modified
+bibliography: bibliography.bib
+format:
+  elsevier-pdf:
+    keep-tex: true
+    journal:
+      name: Journal Name
+      formatting: preprint
+      model: 3p
+      cite-style: super
 ---
 
-<!-- This is the format for text comments that will be ignored during renderings. Do not put R code in these comments because it will not be ignored. -->
+Please make sure that your manuscript follows the guidelines in the 
+Guide for Authors of the relevant journal. It is not necessary to 
+typeset your manuscript in exactly the same way as an article, 
+unless you are submitting to a camera-ready copy (CRC) journal.
 
-<!-- With the following code you can access and display values from the yml header above. -->
+For detailed instructions regarding the elsevier article class, see   <https://www.elsevier.com/authors/policies-and-guidelines/latex-instructions>
 
-Keywords: `r rmarkdown::metadata$keywords`
+# Bibliography styles
 
-Highlights: `r rmarkdown::metadata$highlights`
+Here are two sample references:  @Feynman1963118 @Dirac1953888.
 
-<!-- The actual document text starts here: -->
+By default, natbib will be used with the `authoryear` style, set in `classoption` variable in YAML. 
+You can sets extra options with `natbiboptions` variable in YAML header. Example 
 
-# Introduction
-
-Here is a citation [@Marwick2017]
-
-# Background
-
-# Methods
-
-# Results
-
-<!-- Here's some example analysis code: -->
-
-```{r}
-#| label: get-data
-#| eval: false
-# Note the path that we need to use to access our data files when rendering this document
-my_data <- read.csv(here::here('analysis/data/raw_data/my_csv_file.csv'))
+```
+natbiboptions: longnamesfirst,angle,semicolon
 ```
 
-```{r}
-#| label: fig-demo-plot
-#| fig-cap: "A plot of random numbers"
-plot(rnorm(10))
-```
+There are various more specific bibliography styles available at
+<https://support.stmdocs.in/wiki/index.php?title=Model-wise_bibliographic_style_files>. 
+To use one of these, add it in the header using, for example, `biblio-style: model1-num-names`.
 
-@fig-demo-plot shows how we can have a caption and cross-reference for a plot. Note that figure label and cross-references must both be prefixed with `fig-`
+## Using CSL 
+
+If `cite-method` is set to `citeproc` in `elsevier_article()`, then pandoc is used for citations instead of `natbib`. In this case, the `csl` option is used to format the references. By default, this template will provide an appropriate style, but alternative `csl` files are available from <https://www.zotero.org/styles?q=elsevier>. These can be downloaded
+and stored locally, or the url can be used as in the example header.
+
+# Equations
+
+Here is an equation:
+$$ 
+  f_{X}(x) = \left(\frac{\alpha}{\beta}\right)
+  \left(\frac{x}{\beta}\right)^{\alpha-1}
+  e^{-\left(\frac{x}{\beta}\right)^{\alpha}}; 
+  \alpha,\beta,x > 0 .
+$$
+
+Inline equations work as well: $\sum_{i = 2}^\infty\{\alpha_i^\beta\}$
+
+# Figures and tables
+
+@fig-meaningless is generated using an R chunk.
 
 ```{r}
-#| label: demo-inline-code
+#| label: fig-meaningless
+#| fig-cap: A meaningless scatterplot
+#| fig-width: 5
+#| fig-height: 5
+#| fig-align: center
+#| out-width: 50%
 #| echo: false
-x <- round(pi, 2)
+plot(runif(25), runif(25))
 ```
 
-Here is an example of inline code `r x` in the middle of a sentence.
+# Tables coming from R
 
-# Discussion
-
-# Conclusion
-
-# Acknowledgements
-
-<!-- The following line inserts a page break  -->
-
-\newpage
-
-# References
-
-<!-- The following line ensures the references appear here for the MS Word or HTML output files, rather than right at the end of the document (this will not work for PDF files):  -->
-
-::: {#refs}
-:::
-
-\newpage
-
-### Colophon
-
-This report was generated on `r Sys.time()` using the following computational environment and dependencies:
+Tables can also be generated using R chunks, as shown in @tbl-simple example.
 
 ```{r}
-#| label: colophon
-#| cache: false
-
-# which R packages and versions?
-if ("devtools" %in% installed.packages()) devtools::session_info()
+#| label: tbl-simple
+#| tbl-cap: Caption centered above table
+#| echo: true
+knitr::kable(head(mtcars)[,1:4])
 ```
 
-The current Git commit details are:
-
-```{r}
-# what commit is this file at? 
-if ("git2r" %in% installed.packages() & git2r::in_repository(path = ".")) git2r::repository(here::here())  
-```
+# References {-}
